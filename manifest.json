@@ -1,0 +1,20 @@
+{
+  "short_name": "Server List",
+  "name": "W3D Hub Server List",
+  "id": "https://app.gsh.w3d.cyberarm.dev",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": "https://app.gsh.w3d.cyberarm.dev",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "black",
+  "background_color": "white",
+  "icons": [
+    {
+      "src": "/media/images/icon.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    }
+  ]
+}

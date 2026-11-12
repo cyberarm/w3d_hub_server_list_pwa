@@ -1,0 +1,108 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: content-box;
+}
+
+html {
+  background-color: #000;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+}
+
+body {
+  background-color: dimgray;
+  background-image: url("/media/images/background.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: "Noto Sans", sans-serif;
+  text-shadow: 0px 1.5pt 2pt #0008;
+  color: white;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  height: 100vh;
+  width: 100%;
+}
+
+header {
+  background-color: #77767b55;
+  box-shadow: 0px 0px 3pt #9a9996ff;
+  padding: 1rem;
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  overflow-y: hidden;
+}
+
+footer {
+  background-color: #77767b55;
+  box-shadow: 0px 0px 3pt #9a9996ff;
+  padding: 1rem;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  padding: 0px 1rem;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.card {
+  border-radius: 5pt;
+  background: #77767b55;
+  box-shadow: 0px 0px 3pt #9a9996ff;
+  margin: 1rem 0px;
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-flow: row;
+}
+
+.server-row >:not(:first-child) {
+  margin-left: 1rem;
+}
+.server-row img {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.host {
+  flex-grow: 1;
+  overflow-x: visible;
+  overflow-y: auto;
+  /* Fix drop shadows getting clipped */
+  padding: 1rem;
+  margin: -1rem;
+}
+
+.column {
+  display: flex;
+  flex-flow: column;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.icon {
+  max-height: 24pt;
+  height: 100%;
+  width: auto;
+}

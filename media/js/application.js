@@ -15,6 +15,16 @@ class ServerList {
     this.setup_dialog();
 
     setInterval(this.update.bind(this), 1_000);
+
+    window.addEventListener("popstate", (event) => {
+      console.log(event);
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (this.dialog_element.open)
+        this.dialog_element.close();
+    });
   }
 
   setup_websocket() {
@@ -113,6 +123,7 @@ class ServerList {
 
       let server = this.servers.find((s) => { return s.id == hash.id });
 
+      history.pushState({}, "Dialog", "?dialog=1");
       this.dialog_element.show();
       this.dialog_populate_server_data(server);
     }

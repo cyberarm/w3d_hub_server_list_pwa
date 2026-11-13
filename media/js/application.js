@@ -8,8 +8,11 @@ class ServerList {
     this.reconnect_delay_ms = 0;
 
     this.host_element = document.querySelector("#host");
+    this.dialog_element = document.querySelector("dialog");
 
     this.setup_websocket();
+
+    this.setup_dialog();
 
     setInterval(this.update.bind(this), 1_000);
   }
@@ -39,6 +42,12 @@ class ServerList {
       }
 
       setTimeout(this.setup_websocket(), this.reconnect_delay_ms);
+    });
+  }
+
+  setup_dialog() {
+    this.dialog_element.addEventListener("command", (event) => {
+      console.log(event);
     });
   }
 
@@ -97,8 +106,16 @@ class ServerList {
 
   add_server_item(hash) {
     let card = document.createElement("div");
-    card.classList.add("card", "server-row", "row");
+    card.classList.add("card", "server-row", "row", "server-item");
     card.dataset["uuid"] = hash.id;
+    card.onclick = (event) => {
+      console.log(event);
+
+      let server = this.servers.find((s) => { return s.id == hash.id });
+
+      this.dialog_element.show();
+      this.dialog_populate_server_data(server);
+    }
 
     let app_icon = document.createElement("img");
     app_icon.classList.add("icon");
@@ -176,6 +193,140 @@ class ServerList {
     if (card) {
       this.host_element.removeChild(card);
     }
+  }
+
+  dialog_populate_server_data(server) {
+    console.log(server);
+
+    // Set dialog background banner image to match app
+    this.dialog_element.style.backgroundImage = `url("/media/images/${server.game}/banner.webp")`;
+
+    // Set server information
+    this.dialog_element.querySelector("#server-name").innerText = server.status.name;
+    this.dialog_element.querySelector("#server-map").innerText = server.status.map;
+    this.dialog_element.querySelector("#server-next-map").innerText = server.status.nextmap;
+    this.dialog_element.querySelector("#server-region").innerText = server.region;
+    // this.dialog_element.querySelector("#server-ping").innerText = server.status.name;
+    this.dialog_element.querySelector("#server-time").innerText = this.server_time_elapsed(server.status.started);
+    this.dialog_element.querySelector("#server-channel").innerText = server.channel;
+    this.dialog_element.querySelector("#server-players").innerText = `${server.status.numplayers}/${server.status.maxplayers}`;
+    this.dialog_element.querySelector("#server-time-left").innerText = this.server_time_remaining(server.status.estimatedEndTime);
+    this.dialog_element.querySelector("#server-version").innerText = server.version;
+
+    // Clear out any old data
+    let host = this.dialog_element.querySelector("#dialog-teams");
+    host.innerHTML = "";
+
+    // Add team rosters
+    server.status.teams.forEach((team) => {
+      let players = server.status.players.filter((player) => { return player.team == team.id });
+      if ((team.id < 0 || team.id > 1) && players.length <= 0) {
+        // skip non-standard teams that are empty.
+      } else {
+        this.add_faction_roster(server, team, players);
+      }
+    });
+  }
+
+  add_faction_roster(server, team, players) {
+    let host = this.dialog_element.querySelector("#dialog-teams");
+
+    console.log(team, players);
+
+    let card = document.createElement("div");
+    card.classList.add("card", "team-card", `faction-${server.game}-${team.name.toLowerCase()}`);
+
+    let team_row = document.createElement("div");
+    team_row.classList.add("row", "server-row", "faction-row");
+    let faction_icon = document.createElement("img");
+    faction_icon.classList.add("icon");
+    faction_icon.src = `/media/images/factions/faction_${server.game}_${team.name.toLowerCase()}.webp`;
+    let faction_name = document.createElement("strong");
+    faction_name.innerText = team.name;
+    team_row.appendChild(faction_icon);
+    team_row.appendChild(faction_name);
+    card.append(team_row);
+
+    let team_stats = document.createElement("div");
+    team_stats.classList.add("row", "server-row");
+    ["Score", "Kills", "Deaths", "Players"].forEach((v) => {
+      let container = document.createElement("div");
+      container.classList.add("column");
+      if (v.toLowerCase() !== "players")
+        container.classList.add("grow");
+      console.log(v, container.classList)
+      let title = document.createElement("strong");
+      title.innerText = v;
+      let value = document.createElement("p");
+      if (v.toLowerCase() !== "players")
+        value.innerText = team[v.toLowerCase()];
+      else
+        value.innerText = `${players.length}/${server.status.maxplayers}`;
+
+      container.appendChild(title);
+      container.appendChild(value);
+      team_stats.appendChild(container);
+    });
+    card.appendChild(team_stats);
+
+    if (players.length > 0) {
+      // Horizontal separator
+      let hr = document.createElement("hr");
+      card.appendChild(hr);
+
+      let roster = document.createElement("div");
+      roster.classList.add("roster-grid");
+      let fields = ["Name", "Score", "Kills", "Deaths", "Ping", "Time"];
+      // Labels
+      fields.forEach((v) => {
+        let title = document.createElement("strong");
+        title.innerText = v;
+        roster.appendChild(title);
+      });
+
+      // Players
+      players.sort((a, b) => { return a.score < b.score }).forEach((player) => {
+        fields.forEach((v) => {
+          let value = document.createElement("p");
+          value.classList.add("clip-text");
+          if (v.toLowerCase() === "name")
+            value.innerText = player.nick;
+          else
+            value.innerText = player[v.toLowerCase()];
+
+          roster.appendChild(value);
+        });
+      });
+
+      card.appendChild(roster);
+    }
+
+    host.appendChild(card);
+  }
+
+  server_time_elapsed(time) {
+    let elapsed_seconds = (Date.now() - Date.parse(time)) / 1000;
+
+    let hours = Math.floor(elapsed_seconds / 60.0 / 60.0) % 100;
+    let minutes = Math.floor(elapsed_seconds / 60.0) % 60;
+    let seconds = Math.floor(elapsed_seconds) % 60;
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  server_time_remaining(time) {
+    if (time === null)
+      return "∞";
+
+    let remaining_seconds = (Date.parse(time) - Date.now()) / 1000;
+    if (remaining_seconds < 0)
+      remaining_seconds = 0;
+
+    let hours = Math.floor(remaining_seconds / 60.0 / 60.0) % 100;
+    let minutes = Math.floor(remaining_seconds / 60.0) % 60;
+    let seconds = Math.floor(remaining_seconds) % 60;
+
+    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   }
 };
 

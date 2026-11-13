@@ -22,7 +22,7 @@
 
     <main>
       <div class="container center-container">
-        <div class="card row space-between">
+        <div class="card row space-between filter-row">
           <img class="icon" src="/media/images/apb/icon.webp" title="Red Alert: A Path Beyond"/>
           <img class="icon" src="/media/images/ar/icon.webp" title="Red Alert 2: Apocalypse Rising"/>
           <img class="icon" src="/media/images/ecw/icon.webp" title="Expansive Civilian Warfare" />
@@ -50,7 +50,7 @@
       </div>
     </main>
 
-    <footer>
+    <footer style="display: none;">
       <div class="container">
         <ul>
           <li>Server List</li>
@@ -59,12 +59,12 @@
       </div>
     </footer>
 
-    <dialog open>
+    <dialog id="dialog">
       <header>
         <div class="container">
           <ul>
             <li class="clip-text">
-              <strong>SERVER NAME GOES HERE SERVER NAME GOES HERE SERVER NAME GOES HERE</strong>
+              <strong id="server-name">SERVER NAME GOES HERE SERVER NAME GOES HERE SERVER NAME GOES HERE</strong>
             </li>
           </ul>
         </div>
@@ -77,140 +77,141 @@
               <div class="row server-row">
                 <div class="column grow max-width-50-percent">
                   <strong class="clip-text">Map</strong>
-                  <p class="clip-text">CURRENT MAP NAME HERE CURRENT MAP NAME HERE</p>
+                  <p id="server-map" class="clip-text">CURRENT MAP NAME HERE CURRENT MAP NAME HERE</p>
 
                   <strong class="clip-text">Next Map</strong>
-                  <p class="clip-text">NEXT MAP NAME HERE</p>
+                  <p id="server-next-map" class="clip-text">NEXT MAP NAME HERE</p>
 
                   <strong class="clip-text">Region</strong>
-                  <p class="clip-text">REGION NAME HERE</p>
+                  <p id="server-region" class="clip-text">REGION NAME HERE</p>
                 </div>
 
                 <div class="column grow">
                   <strong class="clip-text">Ping</strong>
-                  <p class="clip-text">—</p>
+                  <p id="server-ping" class="clip-text">—</p>
 
                   <strong class="clip-text">Time</strong>
-                  <p class="clip-text">00:00:00</p>
+                  <p id="server-time" class="clip-text">00:00:00</p>
 
                   <strong class="clip-text">Channel</strong>
-                  <p class="clip-text">Modern Client</p>
+                  <p id="server-channel" class="clip-text">Modern Client</p>
                 </div>
 
                 <div class="column">
                   <strong class="clip-text">Players</strong>
-                  <p class="clip-text">999/999</p>
+                  <p id="server-players" class="clip-text">999/999</p>
 
                   <strong class="clip-text">Time Left</strong>
-                  <p class="clip-text">00:00:00</p>
+                  <p id="server-time-left" class="clip-text">00:00:00</p>
 
                   <strong class="clip-text">Version</strong>
-                  <p class="clip-text">10.10.10.10</p>
+                  <p id="server-version" class="clip-text">10.10.10.10</p>
                 </div>
               </div>
             </div>
 
             <!--TEAMS-->
+            <div id="dialog-teams">
+              <div class="card team-card faction-ren-nod">
+                <div class="row server-row faction-row">
+                  <img src="media/images/factions/faction_ren_nod.webp" class="icon" />
+                  <strong>Nod</strong>
+                </div>
 
-            <div class="card team-card">
-              <div class="row server-row faction-row">
-                <img src="media/images/factions/faction_apb_soviets.webp" class="icon" />
-                <strong>Soviets</strong>
-              </div>
+                <div class="row server-row">
+                  <div class="column grow">
+                    <strong>Score</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column grow">
+                    <strong>Kills</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column grow">
+                    <strong>Deaths</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column">
+                    <strong>Players</strong>
+                    <p>999/999</p>
+                  </div>
+                </div>
 
-              <div class="row server-row">
-                <div class="column grow">
+                <hr/>
+
+                <div class="roster-grid">
+                  <strong>Name</strong>
                   <strong>Score</strong>
-                  <p>99999999</p>
-                </div>
-                <div class="column grow">
                   <strong>Kills</strong>
-                  <p>99999999</p>
-                </div>
-                <div class="column grow">
                   <strong>Deaths</strong>
-                  <p>99999999</p>
+                  <strong>Ping</strong>
+                  <strong>Time</strong>
+
+                  <p class="clip-text">HELLO REALLY LONG NAME</p>
+                  <p class="clip-text">9999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">00:00:00</p>
+
+                  <p class="clip-text">eyo</p>
+                  <p class="clip-text">99</p>
+                  <p class="clip-text">9</p>
+                  <p class="clip-text">2</p>
+                  <p class="clip-text">5</p>
+                  <p class="clip-text">00:01:21</p>
                 </div>
-                <div class="column">
-                  <strong>Players</strong>
-                  <p>999/999</p>
+              </div>
+
+              <div class="card team-card faction-ren-gdi">
+                <div class="row server-row faction-row">
+                  <img src="media/images/factions/faction_ren_gdi.webp" class="icon" />
+                  <strong>GDI</strong>
                 </div>
-              </div>
 
-              <hr/>
+                <div class="row server-row">
+                  <div class="column grow">
+                    <strong>Score</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column grow">
+                    <strong>Kills</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column grow">
+                    <strong>Deaths</strong>
+                    <p>99999999</p>
+                  </div>
+                  <div class="column">
+                    <strong>Players</strong>
+                    <p>999/999</p>
+                  </div>
+                </div>
 
-              <div class="roster-grid">
-                <strong>Name</strong>
-                <strong>Score</strong>
-                <strong>Kills</strong>
-                <strong>Deaths</strong>
-                <strong>Ping</strong>
-                <strong>Time</strong>
+                <hr/>
 
-                <p class="clip-text">HELLO REALLY LONG NAME</p>
-                <p class="clip-text">9999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">00:00:00</p>
-
-                <p class="clip-text">eyo</p>
-                <p class="clip-text">99</p>
-                <p class="clip-text">9</p>
-                <p class="clip-text">2</p>
-                <p class="clip-text">5</p>
-                <p class="clip-text">00:01:21</p>
-              </div>
-            </div>
-
-            <div class="card team-card">
-              <div class="row server-row faction-row">
-                <img src="media/images/factions/faction_apb_allies.webp" class="icon" />
-                <strong>Allies</strong>
-              </div>
-
-              <div class="row server-row">
-                <div class="column grow">
+                <div class="roster-grid">
+                  <strong>Name</strong>
                   <strong>Score</strong>
-                  <p>99999999</p>
-                </div>
-                <div class="column grow">
                   <strong>Kills</strong>
-                  <p>99999999</p>
-                </div>
-                <div class="column grow">
                   <strong>Deaths</strong>
-                  <p>99999999</p>
+                  <strong>Ping</strong>
+                  <strong>Time</strong>
+
+                  <p class="clip-text">HELLO REALLY LONG NAME</p>
+                  <p class="clip-text">9999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">999</p>
+                  <p class="clip-text">00:00:00</p>
+
+                  <p class="clip-text">eyo</p>
+                  <p class="clip-text">99</p>
+                  <p class="clip-text">9</p>
+                  <p class="clip-text">2</p>
+                  <p class="clip-text">5</p>
+                  <p class="clip-text">00:01:21</p>
                 </div>
-                <div class="column">
-                  <strong>Players</strong>
-                  <p>999/999</p>
-                </div>
-              </div>
-
-              <hr/>
-
-              <div class="roster-grid">
-                <strong>Name</strong>
-                <strong>Score</strong>
-                <strong>Kills</strong>
-                <strong>Deaths</strong>
-                <strong>Ping</strong>
-                <strong>Time</strong>
-
-                <p class="clip-text">HELLO REALLY LONG NAME</p>
-                <p class="clip-text">9999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">999</p>
-                <p class="clip-text">00:00:00</p>
-
-                <p class="clip-text">eyo</p>
-                <p class="clip-text">99</p>
-                <p class="clip-text">9</p>
-                <p class="clip-text">2</p>
-                <p class="clip-text">5</p>
-                <p class="clip-text">00:01:21</p>
               </div>
             </div>
           </div>

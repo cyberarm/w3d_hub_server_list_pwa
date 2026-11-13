@@ -96,12 +96,25 @@ class ServerList {
         break;
       }
 
-      case "server_added", "server_updated": {
+      case "server_added":
+      case "server_updated": {
+        let server = this.servers.find((s) => { return s.id == data.data.id });
+        if (server) {
+          this.servers[this.servers.indexOf(server)] = data.data;
+        } else {
+          this.servers.push(data.data);
+        }
+
         this.update_server_item(data.data);
         break;
       }
 
       case "server_removed": {
+        let server = this.servers.find((s) => { return s.id == data.data.id });
+        if (server) {
+          this.servers.splice(this.servers.indexOf(server), 1);
+        }
+
         this.remove_server_item(data.data);
         break;
       }
@@ -119,7 +132,7 @@ class ServerList {
     card.classList.add("card", "server-row", "row", "server-item");
     card.dataset["uuid"] = hash.id;
     card.onclick = (event) => {
-      console.log(event);
+      // console.log(event);
 
       let server = this.servers.find((s) => { return s.id == hash.id });
 
@@ -207,7 +220,7 @@ class ServerList {
   }
 
   dialog_populate_server_data(server) {
-    console.log(server);
+    // console.log(server);
 
     // Set dialog background banner image to match app
     this.dialog_element.style.backgroundImage = `url("/media/images/${server.game}/banner.webp")`;
@@ -242,7 +255,7 @@ class ServerList {
   add_faction_roster(server, team, players) {
     let host = this.dialog_element.querySelector("#dialog-teams");
 
-    console.log(team, players);
+    // console.log(team, players);
 
     let card = document.createElement("div");
     card.classList.add("card", "team-card", `faction-${server.game}-${team.name.toLowerCase()}`);
@@ -265,7 +278,6 @@ class ServerList {
       container.classList.add("column");
       if (v.toLowerCase() !== "players")
         container.classList.add("grow");
-      console.log(v, container.classList)
       let title = document.createElement("strong");
       title.innerText = v;
       let value = document.createElement("p");
